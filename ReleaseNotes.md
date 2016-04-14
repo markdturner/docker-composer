@@ -1,5 +1,9 @@
 # Release Notes
 
+## Version 1.0.7 (2016.04.14)
+
+- New implemented keywords: restart, volumes, link, net, entrypoint
+
 ## Version 1.0.6 (2015.11.08)
 
 - New implemented keywords: cpu_shares
