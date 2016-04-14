@@ -21,16 +21,16 @@ function processProps(serviceName, serviceProperties, cb) {
 
     //ports
     if ("ports" === prop && serviceProperties[prop].length) {
-      ymlFragment = ymlFragment.concat("  ").concat('ports:\n') ;
+      ymlFragment = ymlFragment.concat("    ").concat('ports:\n') ;
 
       for (let portNum of serviceProperties[prop]) {
-        ymlFragment = ymlFragment.concat("   -").concat(portNum).concat('\n') ;
+        ymlFragment = ymlFragment.concat('        - "').concat(portNum).concat('"\n') ;
       }
     }
 
     //image
     if ("image" === prop) {
-      ymlFragment = ymlFragment.concat("  image: ").concat(serviceProperties[prop]).concat('\n') ;
+      ymlFragment = ymlFragment.concat("    image: ").concat(serviceProperties[prop]).concat('\n') ;
     }
 
     //environment
@@ -38,11 +38,11 @@ function processProps(serviceName, serviceProperties, cb) {
       let environmentJSON = serviceProperties[prop];
       if (Object.getOwnPropertyNames(environmentJSON).length) {
 
-        ymlFragment = ymlFragment.concat("  environment:").concat('\n');
+        ymlFragment = ymlFragment.concat("    environment:").concat('\n');
 
         for (let envJSONKey of Object.getOwnPropertyNames(environmentJSON)) {
           let environmentValue = environmentJSON[envJSONKey];
-          ymlFragment = ymlFragment.concat("   -").concat(envJSONKey).concat(":").concat(environmentValue).concat('\n') ;
+          ymlFragment = ymlFragment.concat("        - ").concat(envJSONKey).concat("=").concat(environmentValue).concat('\n') ;
         }
       }
     }
@@ -52,62 +52,93 @@ function processProps(serviceName, serviceProperties, cb) {
       let hostsJSON = serviceProperties[prop];
       if (Object.getOwnPropertyNames(hostsJSON).length) {
 
-        ymlFragment = ymlFragment.concat("  extra_hosts:").concat('\n');
+        ymlFragment = ymlFragment.concat("    extra_hosts:").concat('\n');
 
         for (let envJSONKey of Object.getOwnPropertyNames(hostsJSON)) {
           let hostsValue = hostsJSON[envJSONKey];
-          ymlFragment = ymlFragment.concat("   -").concat(envJSONKey).concat(":").concat(hostsValue).concat('\n') ;
+          ymlFragment = ymlFragment.concat("        - ").concat(envJSONKey).concat(":").concat(hostsValue).concat('\n') ;
         }
       }
     }
     //expose
     if ("expose" === prop && serviceProperties[prop].length) {
-      ymlFragment = ymlFragment.concat("  ").concat('expose:\n') ;
+      ymlFragment = ymlFragment.concat("    ").concat('expose:\n') ;
 
       for (let exposePort of serviceProperties[prop]) {
-        ymlFragment = ymlFragment.concat("   -").concat(exposePort).concat('\n') ;
+        ymlFragment = ymlFragment.concat("        - ").concat(exposePort).concat('\n') ;
       }
     }
 
     //command
     if ("command" === prop) {
-      ymlFragment = ymlFragment.concat("  command: ").concat(serviceProperties[prop]).concat('\n') ;
+      ymlFragment = ymlFragment.concat("    command: ").concat(serviceProperties[prop]).concat('\n') ;
     }
 
     //dns
     if ("dns" === prop && serviceProperties[prop].length) {
-      ymlFragment = ymlFragment.concat("  ").concat('dns:\n') ;
+      ymlFragment = ymlFragment.concat("    ").concat('dns:\n') ;
 
       for (let dnsServerIP of serviceProperties[prop]) {
-        ymlFragment = ymlFragment.concat("   -").concat(dnsServerIP).concat('\n') ;
+        ymlFragment = ymlFragment.concat("        - ").concat(dnsServerIP).concat('\n') ;
       }
     }
 
     //dns search
     if ("dns_search" === prop && serviceProperties[prop].length) {
-      ymlFragment = ymlFragment.concat("  ").concat('dns_search:\n') ;
+      ymlFragment = ymlFragment.concat("    ").concat('dns_search:\n') ;
 
       for (let dnsServerIP of serviceProperties[prop]) {
-        ymlFragment = ymlFragment.concat("   -").concat(dnsServerIP).concat('\n') ;
+        ymlFragment = ymlFragment.concat("        - ").concat(dnsServerIP).concat('\n') ;
       }
     }
 
     //memory limit
     if ("mem_limit" === prop) {
-      ymlFragment = ymlFragment.concat("  mem_limit: ").concat(serviceProperties[prop]).concat('\n') ;
+      ymlFragment = ymlFragment.concat("    mem_limit: ").concat(serviceProperties[prop]).concat('\n') ;
     }
 
     //memory swap limit
     if ("memswap_limit" === prop) {
-      ymlFragment = ymlFragment.concat("  memswap_limit: ").concat(serviceProperties[prop]).concat('\n') ;
+      ymlFragment = ymlFragment.concat("    memswap_limit: ").concat(serviceProperties[prop]).concat('\n') ;
     }
 
     //cpu_shares
     if ("cpu_shares" === prop) {
-      ymlFragment = ymlFragment.concat("  cpu_shares: ").concat(serviceProperties[prop]).concat('\n') ;
+      ymlFragment = ymlFragment.concat("    cpu_shares: ").concat(serviceProperties[prop]).concat('\n') ;
     }
 
-    //cpuset
+    //restart
+    if ("restart" === prop) {
+      ymlFragment = ymlFragment.concat("    retart: ").concat(serviceProperties[prop]).concat('\n') ;
+    }
+    
+    //volumes
+    if ("volumes" === prop && serviceProperties[prop].length) {
+      ymlFragment = ymlFragment.concat("    ").concat('volumes:\n') ;
+
+      for (let volume of serviceProperties[prop]) {
+        ymlFragment = ymlFragment.concat("        - ").concat(volume).concat('\n') ;
+      }
+    }
+    
+    //links
+    if ("links" === prop && serviceProperties[prop].length) {
+      ymlFragment = ymlFragment.concat("    ").concat('links:\n') ;
+
+      for (let link of serviceProperties[prop]) {
+        ymlFragment = ymlFragment.concat("        - ").concat(link).concat('\n') ;
+      }
+    }
+    
+    //net
+    if ("net" === prop) {
+      ymlFragment = ymlFragment.concat("    net: ").concat(serviceProperties[prop]).concat('\n') ;
+    }
+    
+    //entrypoint
+    if ("entrypoint" === prop) {
+      ymlFragment = ymlFragment.concat("    entrypoint: ").concat(serviceProperties[prop]).concat('\n') ;
+    }
 
 
 

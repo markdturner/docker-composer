@@ -190,5 +190,13 @@ describe('composer', function() {
     });
     done() ;
   }) ;
+  it('custom appends (net, links, entrypoint, volumes, restart)', function(done) {
+    let outputYML = fs.readFileSync('./tests/custom_net_output.yml');
 
+    composer.generate(fs.readFileSync('./tests/custom_net_input.json'), function(err, result) {
+      should.not.exist(err) ;
+      should.equal(result.replace(/(\r\n|\n|\r)/gm, ""), outputYML.toString().replace(/(\r\n|\n|\r)/gm, "")) ;
+    });
+    done() ;
+  }) ;
 });
