@@ -109,7 +109,7 @@ function processProps(serviceName, serviceProperties, cb) {
 
     //restart
     if ("restart" === prop) {
-      ymlFragment = ymlFragment.concat("    retart: ").concat(serviceProperties[prop]).concat('\n') ;
+      ymlFragment = ymlFragment.concat("    restart: ").concat(serviceProperties[prop]).concat('\n') ;
     }
     
     //volumes
