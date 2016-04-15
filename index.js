@@ -1,29 +1,29 @@
 'use strict';
 
 var async = require('async');
-let fragments = [];
+var fragments = [];
 
 function processProps(serviceName, serviceProperties, cb) {
 
-  let ymlFragment = '';
+  var ymlFragment = '';
   if (!serviceName) {
-    let error = new Error('missing servicename..');
+    var error = new Error('missing servicename..');
     return cb(error);
   }
   if (!serviceProperties) {
-    let error = new Error('missing properties..');
+    var error = new Error('missing properties..');
     return cb(error);
   }
 
   ymlFragment = ymlFragment.concat(serviceName).concat(':').concat('\n') ;
 
-  for (let prop of Object.getOwnPropertyNames(serviceProperties)) {
+  for (var prop of Object.getOwnPropertyNames(serviceProperties)) {
 
     //ports
     if ("ports" === prop && serviceProperties[prop].length) {
       ymlFragment = ymlFragment.concat("    ").concat('ports:\n') ;
 
-      for (let portNum of serviceProperties[prop]) {
+      for (var portNum of serviceProperties[prop]) {
         ymlFragment = ymlFragment.concat('        - "').concat(portNum).concat('"\n') ;
       }
     }
@@ -35,13 +35,13 @@ function processProps(serviceName, serviceProperties, cb) {
 
     //environment
     if ("environment" === prop) {
-      let environmentJSON = serviceProperties[prop];
+      var environmentJSON = serviceProperties[prop];
       if (Object.getOwnPropertyNames(environmentJSON).length) {
 
         ymlFragment = ymlFragment.concat("    environment:").concat('\n');
 
-        for (let envJSONKey of Object.getOwnPropertyNames(environmentJSON)) {
-          let environmentValue = environmentJSON[envJSONKey];
+        for (var envJSONKey of Object.getOwnPropertyNames(environmentJSON)) {
+          var environmentValue = environmentJSON[envJSONKey];
           ymlFragment = ymlFragment.concat("        - ").concat(envJSONKey).concat("=").concat(environmentValue).concat('\n') ;
         }
       }
@@ -49,13 +49,13 @@ function processProps(serviceName, serviceProperties, cb) {
 
     //extra_hosts
     if ("extra_hosts" === prop) {
-      let hostsJSON = serviceProperties[prop];
+      var hostsJSON = serviceProperties[prop];
       if (Object.getOwnPropertyNames(hostsJSON).length) {
 
         ymlFragment = ymlFragment.concat("    extra_hosts:").concat('\n');
 
-        for (let envJSONKey of Object.getOwnPropertyNames(hostsJSON)) {
-          let hostsValue = hostsJSON[envJSONKey];
+        for (var envJSONKey of Object.getOwnPropertyNames(hostsJSON)) {
+          var hostsValue = hostsJSON[envJSONKey];
           ymlFragment = ymlFragment.concat("        - ").concat(envJSONKey).concat(":").concat(hostsValue).concat('\n') ;
         }
       }
@@ -64,7 +64,7 @@ function processProps(serviceName, serviceProperties, cb) {
     if ("expose" === prop && serviceProperties[prop].length) {
       ymlFragment = ymlFragment.concat("    ").concat('expose:\n') ;
 
-      for (let exposePort of serviceProperties[prop]) {
+      for (var exposePort of serviceProperties[prop]) {
         ymlFragment = ymlFragment.concat("        - ").concat(exposePort).concat('\n') ;
       }
     }
@@ -78,7 +78,7 @@ function processProps(serviceName, serviceProperties, cb) {
     if ("dns" === prop && serviceProperties[prop].length) {
       ymlFragment = ymlFragment.concat("    ").concat('dns:\n') ;
 
-      for (let dnsServerIP of serviceProperties[prop]) {
+      for (var dnsServerIP of serviceProperties[prop]) {
         ymlFragment = ymlFragment.concat("        - ").concat(dnsServerIP).concat('\n') ;
       }
     }
@@ -87,7 +87,7 @@ function processProps(serviceName, serviceProperties, cb) {
     if ("dns_search" === prop && serviceProperties[prop].length) {
       ymlFragment = ymlFragment.concat("    ").concat('dns_search:\n') ;
 
-      for (let dnsServerIP of serviceProperties[prop]) {
+      for (var dnsServerIP of serviceProperties[prop]) {
         ymlFragment = ymlFragment.concat("        - ").concat(dnsServerIP).concat('\n') ;
       }
     }
@@ -116,7 +116,7 @@ function processProps(serviceName, serviceProperties, cb) {
     if ("volumes" === prop && serviceProperties[prop].length) {
       ymlFragment = ymlFragment.concat("    ").concat('volumes:\n') ;
 
-      for (let volume of serviceProperties[prop]) {
+      for (var volume of serviceProperties[prop]) {
         ymlFragment = ymlFragment.concat("        - ").concat(volume).concat('\n') ;
       }
     }
@@ -125,7 +125,7 @@ function processProps(serviceName, serviceProperties, cb) {
     if ("links" === prop && serviceProperties[prop].length) {
       ymlFragment = ymlFragment.concat("    ").concat('links:\n') ;
 
-      for (let link of serviceProperties[prop]) {
+      for (var link of serviceProperties[prop]) {
         ymlFragment = ymlFragment.concat("        - ").concat(link).concat('\n') ;
       }
     }
@@ -156,7 +156,7 @@ module.exports.generate = function(json, callback) {
   if (!json) {
     return callback(new Error('json is missing'));
   }
-  let parsedJSON = '';
+  var parsedJSON = '';
   try {
     parsedJSON = JSON.parse(json) ;
   } catch (err) {
@@ -167,8 +167,8 @@ module.exports.generate = function(json, callback) {
 
   async.forEachOf(parsedJSON, function(value, key, callback) {
     processProps(key, value, callback);
-  }) ;let resultString = '';
-  for (let fragment of fragments) {
+  }) ;var resultString = '';
+  for (var fragment of fragments) {
     resultString = resultString.concat(fragment).concat('\n') ;
   }
   return callback(null, resultString);
