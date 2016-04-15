@@ -1,6 +1,6 @@
 'use strict';
 
-const async = require('async');
+var async = require('async');
 let fragments = [];
 
 function processProps(serviceName, serviceProperties, cb) {
